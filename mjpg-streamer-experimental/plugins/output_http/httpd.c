@@ -307,6 +307,12 @@ int unescape(char *string)
 
 #ifdef MANAGMENT
 
+struct {
+    client_info **infos;
+    unsigned int client_count;
+    pthread_mutex_t mutex;
+} client_infos;
+
 /******************************************************************************
 Description.: Adds a new client information struct to the ino list.
 Input Value.: Client IP address as a string
