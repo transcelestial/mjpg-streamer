@@ -114,8 +114,11 @@ static void signal_handler(int sig)
     for(i = 0; i < global.outcnt; i++) {
         DBG("loop 2: i = %d\n", i);
         global.out[i].stop(global.out[i].param.id);
+        DBG("loop 2: i = %d; stopped\n", i);
         pthread_cond_destroy(&global.in[i].db_update);
+        DBG("loop 2: i = %d; cond destroyed\n", i);
         pthread_mutex_destroy(&global.in[i].db);
+        DBG("loop 2: i = %d; mutex destroyed\n", i);
         /*for (j = 0; j<MAX_PLUGIN_ARGUMENTS; j++) {
             if (global.out[i].param.argv[j] != NULL)
                 free(global.out[i].param.argv[j]);
