@@ -102,6 +102,7 @@ static void signal_handler(int sig)
     /* clean up threads */
     LOG("force cancellation of threads and cleanup resources\n");
     for(i = 0; i < global.incnt; i++) {
+        DBG("loop 1: i = %d\n", i);
         global.in[i].stop(i);
         /*for (j = 0; j<MAX_PLUGIN_ARGUMENTS; j++) {
             if (global.in[i].param.argv[j] != NULL) {
@@ -111,6 +112,7 @@ static void signal_handler(int sig)
     }
 
     for(i = 0; i < global.outcnt; i++) {
+        DBG("loop 2: i = %d\n", i);
         global.out[i].stop(global.out[i].param.id);
         pthread_cond_destroy(&global.in[i].db_update);
         pthread_mutex_destroy(&global.in[i].db);
@@ -123,10 +125,12 @@ static void signal_handler(int sig)
 
     /* close handles of input plugins */
     for(i = 0; i < global.incnt; i++) {
+        DBG("loop 3: i = %d\n", i);
         dlclose(global.in[i].handle);
     }
 
     for(i = 0; i < global.outcnt; i++) {
+        DBG("loop 4: i = %d\n", i);
         int j, skip = 0;
         DBG("about to decrement usage counter for handle of %s, id #%02d, handle: %p\n", \
             global.out[i].plugin, global.out[i].param.id, global.out[i].handle);
